@@ -162,7 +162,7 @@ class ShowMapOfAllSeams(Scene):
 
 class BuildDynamicArray(Scene):
     def construct(self):
-        img_shape = (3, 3)
+        img_shape = (6, 6)
         pixel_array = np.random.randint(20, 100, img_shape)
         pix_arr_mob = PixelArray(
             img=pixel_array, color_mode="GRAY", include_numbers=True
@@ -188,12 +188,21 @@ class BuildDynamicArray(Scene):
                 )
 
                 # check pixel down left, down down and down right
-                eval_min = [pixel_array[row - 1, col]]
+                eval_min = [pixel_array[row + 1, col]]
 
                 if col - 1 > 0:
-                    eval_min.append(pixel_array[row - 1, col - 1])
+                    eval_min.append(pixel_array[row + 1, col - 1])
 
                 if col + 1 < img_shape[1]:
-                    eval_min.append(pixel_array[row - 1, col + 1])
+                    eval_min.append(pixel_array[row + 1, col + 1])
+
+                min_val = min(eval_min)
+
+                self.play(
+                    FadeIn(curr_pix),
+                    new_array_mob.update_index(
+                        (row, col), min_val + pixel_array[row, col]
+                    ),
+                )
 
         self.wait()
