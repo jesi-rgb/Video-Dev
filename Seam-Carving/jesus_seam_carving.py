@@ -177,20 +177,23 @@ class BuildDynamicArray(Scene):
 
         self.play(FadeIn(pix_arr_mob, new_array_mob))
 
-        for row in reversed(range(img_shape[0])):
-            for pixel in range(img_shape[1]):
+        for row in reversed(range(1, img_shape[0])):
+            for col in range(img_shape[1]):
                 curr_pix = (
-                    pix_arr_mob[row, pixel]
+                    pix_arr_mob[row, col]
                     .copy()
                     .set_color(REDUCIBLE_VIOLET)
                     .set_opacity(0.3)
                 )
 
-                self.play(new_array_mob.update_index((row, pixel), pixel))
+                # check pixel up left, up up and up right
 
-                self.play(
-                    FadeIn(curr_pix),
-                    run_time=3 / config.frame_rate,
-                )
+                eval_min = [pixel_array[row - 1, col]]
+
+                if col - 1 > 0:
+                    eval_min.append(pixel_array[row - 1, col - 1])
+
+                if col + 1 < img_shape[1]:
+                    eval_min.append(pixel_array[row - 1, col + 1])
 
         self.wait()
