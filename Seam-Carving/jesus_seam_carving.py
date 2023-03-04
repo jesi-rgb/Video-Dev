@@ -169,6 +169,7 @@ class BuildDynamicArray(Scene):
         )
 
         new_array = np.zeros(img_shape, dtype=int)
+        new_array[-1, :] = pixel_array[-1, :]
         new_array_mob = PixelArray(new_array, color_mode="GRAY", include_numbers=True)
 
         VGroup(pix_arr_mob, new_array_mob).arrange(RIGHT, buff=1).scale_to_fit_width(
@@ -177,7 +178,7 @@ class BuildDynamicArray(Scene):
 
         self.play(FadeIn(pix_arr_mob, new_array_mob))
 
-        for row in reversed(range(1, img_shape[0])):
+        for row in reversed(range(0, img_shape[0] - 1)):
             for col in range(img_shape[1]):
                 curr_pix = (
                     pix_arr_mob[row, col]
@@ -186,8 +187,7 @@ class BuildDynamicArray(Scene):
                     .set_opacity(0.3)
                 )
 
-                # check pixel up left, up up and up right
-
+                # check pixel down left, down down and down right
                 eval_min = [pixel_array[row - 1, col]]
 
                 if col - 1 > 0:
