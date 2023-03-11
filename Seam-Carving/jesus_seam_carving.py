@@ -5,13 +5,16 @@ import sys
 sys.path.insert(1, "common/")
 
 from manim import *
+
 from seam_carving_utils import *
+
 from itertools import product
 import numpy as np
 from pprint import pprint
 
 config["assets_dir"] = "assets"
 from classes import *
+
 
 np.random.seed(1)
 
@@ -77,7 +80,6 @@ class AllPossibleSeams(Scene):
         for seam in all_seams:
             marked_pixels = VGroup()
             for coord in seam:
-
                 current_pixel_mob = pix_arr_mob[coord].copy()
                 marked_pixels.add(current_pixel_mob)
 
@@ -124,7 +126,6 @@ class ShowMapOfAllSeams(Scene):
         for seam in all_seams:
             marked_pixels = VGroup()
             for coord in seam:
-
                 current_pixel_mob = pix_arr_mob[coord].copy()
                 marked_pixels.add(current_pixel_mob)
 
@@ -206,3 +207,13 @@ class BuildDynamicArray(Scene):
                 )
 
         self.wait()
+
+
+class CombinatoricsProblem(Scene):
+    def construct(self):
+        img_shape = (10, 10)
+        pix_array = np.random.randint(20, 200, img_shape)
+
+        pix_array_mob = PixelArray(pix_array, color_mode="GRAY")
+
+        self.play(LaggedStartMap(Write, pix_array_mob))
