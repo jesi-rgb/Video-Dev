@@ -109,6 +109,7 @@ class AGraph(Graph):
             labels=labels,
             **kwargs,
         )
+        print("finish loading nodes and edges")
         ### RED-103: Vertices should be the same size (even for larger labels)
         for v in self.vertices:
             if v >= 10:
