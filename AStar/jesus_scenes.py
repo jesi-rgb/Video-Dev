@@ -30,6 +30,5 @@ class Introduction(AstarAnimationTools):
             edges,
             edge_config={"tip_config": {"tip_length": 0.01, "tip_width": 0.01}},
         )
-        Line
 
         self.add(graph)
